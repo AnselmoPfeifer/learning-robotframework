@@ -1,0 +1,43 @@
+# https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
+
+version: '3'
+
+services:
+  app:
+    # Use this pre-built image in the container registry, unless we want to manually build a new image
+    image: mcr.microsoft.com/vscode/devcontainers/python:0-3.10-buster
+    #   args:
+    #     # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+    #     USER_UID: 1000
+    #     USER_GID: 1000
+    privileged: true
+    working_dir: /workspace
+    volumes:
+      # Preserve your zsh command history between sessions
+      - app-zshhistory:/commandhistory
+      # Forwards the local Docker socket to the container.  This lets us run docker in docker.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Mounts the project folder to '/workspace'. The target path inside the container
+      # should match what your application expects. In this case, the compose file is
+      # in a sub-folder, so you will mount '..'. You would then reference this path as the
+      # 'workspaceFolder' in '.devcontainer/devcontainer.json' so VS Code starts here.
+      - ..:/workspace:cached
+      - $HOME/.ssh:/root/.ssh
+      - $HOME/.gitconfig:/root/.gitconfig
+      - $HOME/.git-credential-cache:/root/.git-credential-cache
+      - $HOME/.git-credentials:/root/.git-credentials
+      - $HOME/.git-templates:/root/.git-templates
+      - ./docker-init.sh:/usr/local/share/docker-init.sh:ro
+
+    # Overrides default command so things don't shut down after the process ends.
+    entrypoint: /usr/local/share/docker-init.sh
+    #command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+volumes:
+  app-zshhistory:

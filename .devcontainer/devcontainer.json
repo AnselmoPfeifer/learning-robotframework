@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/docker-from-docker-compose
+{
+	"name": "learning",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose",
+
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "zsh",
+		"files.autoSave": "afterDelay",
+		"files.autoSaveDelay": 1000
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"samuelcolvin.jinjahtml",
+		"esbenp.prettier-vscode",
+		"ms-python.python",
+		"redhat.vscode-yaml",
+		"hilleer.yaml-plus-json",
+		"eamodio.gitlens",
+		"ms-azure-devops.azure-pipelines",
+		"ms-azuretools.vscode-docker",
+		"robocorp.robotframework-lsp"
+	],
+
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": []',
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	//"remoteUser": "vscode"
+}
